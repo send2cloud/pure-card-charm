@@ -209,6 +209,27 @@
             border: 2px solid #ffd700;
         }
 
+        .language-selector {
+            padding: 8px 12px;
+            background-color: white;
+            color: #4a90e2;
+            border: 1px solid white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            margin-bottom: 15px;
+        }
+
+        .language-selector:hover {
+            background-color: #f0f0f0;
+        }
+
+        .language-selector:focus {
+            outline: 2px solid white;
+        }
+
         @media (max-width: 480px) {
             body {
                 padding: 10px;
@@ -259,17 +280,22 @@
 </head>
 <body>
     <div class="header">
-        <h1>AHM Resources</h1>
+        <select id="languageSelector" class="language-selector">
+            <option value="en">English</option>
+            <option value="fr">Français</option>
+            <option value="ja">日本語</option>
+        </select>
+        <h1 id="pageTitle">AHM Resources</h1>
         <div class="tabs">
-            <div class="tab">User</div>
-            <div class="tab">Manager</div>
-            <div class="tab active">AHM Operations</div>
+            <div class="tab" data-translate="tab-user">User</div>
+            <div class="tab" data-translate="tab-manager">Manager</div>
+            <div class="tab active" data-translate="tab-ahm">AHM Operations</div>
         </div>
     </div>
 
     <div class="search-container">
-        <input type="text" class="search-input" id="searchInput" placeholder="Quick search cards...">
-        <button class="clear-search" id="clearSearch">Clear</button>
+        <input type="text" class="search-input" id="searchInput" placeholder="Quick search cards..." data-translate-placeholder="search-placeholder">
+        <button class="clear-search" id="clearSearch" data-translate="clear-button">Clear</button>
     </div>
 
     <div id="starredSection"></div>
@@ -639,6 +665,92 @@
     </div>
 
     <script>
+        // Translations
+        const translations = {
+            en: {
+                pageTitle: 'AHM Resources',
+                'tab-user': 'User',
+                'tab-manager': 'Manager',
+                'tab-ahm': 'AHM Operations',
+                'search-placeholder': 'Quick search cards...',
+                'clear-button': 'Clear',
+                'starred-title': '⭐ Starred Items',
+                'no-results': 'No cards found matching your search.'
+            },
+            fr: {
+                pageTitle: 'Ressources AHM',
+                'tab-user': 'Utilisateur',
+                'tab-manager': 'Gestionnaire',
+                'tab-ahm': 'Opérations AHM',
+                'search-placeholder': 'Recherche rapide de cartes...',
+                'clear-button': 'Effacer',
+                'starred-title': '⭐ Éléments favoris',
+                'no-results': 'Aucune carte trouvée correspondant à votre recherche.'
+            },
+            ja: {
+                pageTitle: 'AHMリソース',
+                'tab-user': 'ユーザー',
+                'tab-manager': 'マネージャー',
+                'tab-ahm': 'AHM操作',
+                'search-placeholder': 'カードをクイック検索...',
+                'clear-button': 'クリア',
+                'starred-title': '⭐ お気に入り',
+                'no-results': '検索に一致するカードが見つかりません。'
+            }
+        };
+
+        // Current language
+        let currentLanguage = localStorage.getItem('language') || 'en';
+
+        // Apply translations
+        function applyTranslations() {
+            const lang = translations[currentLanguage];
+            
+            // Update page title
+            document.getElementById('pageTitle').textContent = lang.pageTitle;
+            document.title = lang.pageTitle;
+            
+            // Update elements with data-translate
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (lang[key]) {
+                    element.textContent = lang[key];
+                }
+            });
+            
+            // Update placeholder
+            document.querySelectorAll('[data-translate-placeholder]').forEach(element => {
+                const key = element.getAttribute('data-translate-placeholder');
+                if (lang[key]) {
+                    element.placeholder = lang[key];
+                }
+            });
+            
+            // Update starred section title if it exists
+            const starredTitle = document.querySelector('.starred-section .section-title');
+            if (starredTitle) {
+                starredTitle.textContent = lang['starred-title'];
+            }
+            
+            // Update no results message if it exists
+            const noResults = document.getElementById('noResults');
+            if (noResults) {
+                noResults.innerHTML = '<p>' + lang['no-results'] + '</p>';
+            }
+        }
+
+        // Language selector
+        document.addEventListener('DOMContentLoaded', function() {
+            const languageSelector = document.getElementById('languageSelector');
+            languageSelector.value = currentLanguage;
+            
+            languageSelector.addEventListener('change', function() {
+                currentLanguage = this.value;
+                localStorage.setItem('language', currentLanguage);
+                applyTranslations();
+            });
+        });
+
         // Load starred items from localStorage
         let starredItems = JSON.parse(localStorage.getItem('starredItems') || '[]');
 
@@ -714,7 +826,7 @@
                     
                 starredSection.innerHTML = `
                     <div class="section starred-section">
-                        <h2 class="section-title">⭐ Starred Items</h2>
+                        <h2 class="section-title">${translations[currentLanguage]['starred-title']}</h2>
                         <div class="cards-grid">
                             ${cardsHTML}
                         </div>
@@ -768,7 +880,7 @@
                     const noResults = document.createElement('div');
                     noResults.id = 'noResults';
                     noResults.className = 'no-results';
-                    noResults.innerHTML = '<p>No cards found matching your search.</p>';
+                    noResults.innerHTML = '<p>' + translations[currentLanguage]['no-results'] + '</p>';
                     document.getElementById('sectionsContainer').appendChild(noResults);
                 }
             } else {
@@ -784,6 +896,7 @@
 
         // Initialize on load
         initializeStars();
+        applyTranslations();
     </script>
 </body>
 </html>

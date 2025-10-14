@@ -59,15 +59,19 @@
         .search-container {
             margin-bottom: 20px;
             display: flex;
-            gap: 8px;
-            align-items: center;
             justify-content: flex-end;
+            position: relative;
+        }
+
+        .search-wrapper {
+            position: relative;
+            width: 420px;
+            max-width: 100%;
         }
 
         .search-input {
-            width: 420px;
-            max-width: 100%;
-            padding: 10px 12px;
+            width: 100%;
+            padding: 10px 40px 10px 12px;
             border: 2px solid #ddd;
             border-radius: 6px;
             font-size: 14px;
@@ -80,18 +84,26 @@
         }
 
         .clear-search {
-            padding: 10px 16px;
-            background-color: #e74c3c;
-            color: white;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
             border: none;
-            border-radius: 6px;
+            color: #999;
             cursor: pointer;
-            font-size: 13px;
-            transition: background-color 0.3s;
+            font-size: 18px;
+            padding: 5px;
+            display: none;
+            transition: color 0.2s;
         }
 
         .clear-search:hover {
-            background-color: #c0392b;
+            color: #333;
+        }
+
+        .search-input:not(:placeholder-shown) ~ .clear-search {
+            display: block;
         }
 
         .section {
@@ -276,8 +288,10 @@
     </div>
 
     <div class="search-container">
-        <input type="text" class="search-input" id="searchInput" placeholder="Quick search cards...">
-        <button class="clear-search" id="clearSearch">Clear</button>
+        <div class="search-wrapper">
+            <input type="text" class="search-input" id="searchInput" placeholder="Quick search cards...">
+            <button class="clear-search" id="clearSearch">✕</button>
+        </div>
     </div>
 
     <div id="starredSection"></div>

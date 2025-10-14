@@ -25,35 +25,9 @@
             border-radius: 0;
         }
 
-        .header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
         .header h1 {
             font-size: 24px;
-            margin: 0;
-        }
-
-        .language-selector {
-            padding: 8px 15px;
-            background-color: white;
-            color: #4a90e2;
-            border: none;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .language-selector:hover {
-            background-color: rgba(255, 255, 255, 0.9);
-            transform: scale(1.05);
+            margin-bottom: 15px;
         }
 
         .tabs {
@@ -285,24 +259,17 @@
 </head>
 <body>
     <div class="header">
-        <div class="header-top">
-            <h1 id="pageTitle">AHM Resources</h1>
-            <select class="language-selector" id="languageSelector">
-                <option value="en">English</option>
-                <option value="fr">Français</option>
-                <option value="ja">日本語</option>
-            </select>
-        </div>
+        <h1>AHM Resources</h1>
         <div class="tabs">
-            <div class="tab" data-tab="User">User</div>
-            <div class="tab" data-tab="Manager">Manager</div>
-            <div class="tab active" data-tab="AHM Operations">AHM Operations</div>
+            <div class="tab">User</div>
+            <div class="tab">Manager</div>
+            <div class="tab active">AHM Operations</div>
         </div>
     </div>
 
     <div class="search-container">
         <input type="text" class="search-input" id="searchInput" placeholder="Quick search cards...">
-        <button class="clear-search" id="clearSearch" data-text="Clear">Clear</button>
+        <button class="clear-search" id="clearSearch">Clear</button>
     </div>
 
     <div id="starredSection"></div>
@@ -672,86 +639,12 @@
     </div>
 
     <script>
-        // Translations
-        const translations = {
-            en: {
-                pageTitle: "AHM Resources",
-                searchPlaceholder: "Quick search cards...",
-                clearButton: "Clear",
-                starredTitle: "⭐ Starred Items",
-                noResults: "No cards found matching your search.",
-                tabs: {
-                    "User": "User",
-                    "Manager": "Manager",
-                    "AHM Operations": "AHM Operations"
-                }
-            },
-            fr: {
-                pageTitle: "Ressources AHM",
-                searchPlaceholder: "Recherche rapide de cartes...",
-                clearButton: "Effacer",
-                starredTitle: "⭐ Éléments favoris",
-                noResults: "Aucune carte trouvée correspondant à votre recherche.",
-                tabs: {
-                    "User": "Utilisateur",
-                    "Manager": "Gestionnaire",
-                    "AHM Operations": "Opérations AHM"
-                }
-            },
-            ja: {
-                pageTitle: "AHMリソース",
-                searchPlaceholder: "カードをクイック検索...",
-                clearButton: "クリア",
-                starredTitle: "⭐ お気に入りアイテム",
-                noResults: "検索に一致するカードが見つかりません。",
-                tabs: {
-                    "User": "ユーザー",
-                    "Manager": "マネージャー",
-                    "AHM Operations": "AHM運用"
-                }
-            }
-        };
-
-        let currentLanguage = localStorage.getItem('language') || 'en';
-
-        // Apply translations
-        function applyTranslations() {
-            const t = translations[currentLanguage];
-            document.getElementById('pageTitle').textContent = t.pageTitle;
-            document.getElementById('searchInput').placeholder = t.searchPlaceholder;
-            document.getElementById('clearSearch').textContent = t.clearButton;
-            
-            // Update tabs
-            document.querySelectorAll('.tab').forEach(tab => {
-                const tabKey = tab.getAttribute('data-tab');
-                if (t.tabs[tabKey]) {
-                    tab.textContent = t.tabs[tabKey];
-                }
-            });
-
-            // Update starred section title if it exists
-            const starredTitle = document.querySelector('.starred-section .section-title');
-            if (starredTitle) {
-                starredTitle.textContent = t.starredTitle;
-            }
-        }
-
-        // Language selector
-        const languageSelector = document.getElementById('languageSelector');
-        languageSelector.value = currentLanguage;
-        languageSelector.addEventListener('change', function() {
-            currentLanguage = this.value;
-            localStorage.setItem('language', currentLanguage);
-            applyTranslations();
-        });
-
         // Load starred items from localStorage
         let starredItems = JSON.parse(localStorage.getItem('starredItems') || '[]');
 
         // Initialize starred states
         function initializeStars() {
-            const allCards = document.querySelectorAll('#sectionsContainer .card');
-            allCards.forEach(card => {
+            document.querySelectorAll('.card').forEach(card => {
                 const title = card.getAttribute('data-title');
                 const starBtn = card.querySelector('.star-btn');
                 if (starredItems.includes(title)) {
@@ -762,44 +655,27 @@
             updateStarredSection();
         }
 
-        // Toggle star - Fixed to prevent duplicates
+        // Toggle star
         function toggleStar(btn) {
-            if (event) event.stopPropagation();
-            
+            event.stopPropagation();
             const card = btn.closest('.card');
             const title = card.getAttribute('data-title');
             
-            // Update starred items array
             if (starredItems.includes(title)) {
                 starredItems = starredItems.filter(item => item !== title);
+                card.classList.remove('starred');
+                btn.classList.remove('starred');
             } else {
-                // Prevent duplicates
-                if (!starredItems.includes(title)) {
-                    starredItems.push(title);
-                }
+                starredItems.push(title);
+                card.classList.add('starred');
+                btn.classList.add('starred');
             }
             
             localStorage.setItem('starredItems', JSON.stringify(starredItems));
-            
-            // Update ALL cards with this title (both in sections and starred section)
-            document.querySelectorAll('.card').forEach(c => {
-                if (c.getAttribute('data-title') === title) {
-                    const sBtn = c.querySelector('.star-btn');
-                    if (starredItems.includes(title)) {
-                        c.classList.add('starred');
-                        sBtn.classList.add('starred');
-                    } else {
-                        c.classList.remove('starred');
-                        sBtn.classList.remove('starred');
-                    }
-                }
-            });
-            
-            // Rebuild starred section
             updateStarredSection();
         }
 
-        // Update starred section - Completely rebuild to avoid stale clones
+        // Update starred section
         function updateStarredSection() {
             const starredSection = document.getElementById('starredSection');
             
@@ -808,22 +684,20 @@
                 return;
             }
 
-            // Collect unique starred cards from the main sections
-            const starredCardsMap = new Map();
-            document.querySelectorAll('#sectionsContainer .card').forEach(card => {
+            const starredCards = [];
+            document.querySelectorAll('.card').forEach(card => {
                 const title = card.getAttribute('data-title');
-                if (starredItems.includes(title) && !starredCardsMap.has(title)) {
-                    starredCardsMap.set(title, card.cloneNode(true));
+                if (starredItems.includes(title)) {
+                    starredCards.push(card.cloneNode(true));
                 }
             });
 
-            if (starredCardsMap.size > 0) {
-                const t = translations[currentLanguage];
+            if (starredCards.length > 0) {
                 starredSection.innerHTML = `
                     <div class="section starred-section">
-                        <h2 class="section-title">${t.starredTitle}</h2>
+                        <h2 class="section-title">⭐ Starred Items</h2>
                         <div class="cards-grid">
-                            ${Array.from(starredCardsMap.values()).map(card => card.outerHTML).join('')}
+                            ${starredCards.map(card => card.outerHTML).join('')}
                         </div>
                     </div>
                 `;
@@ -890,7 +764,6 @@
         });
 
         // Initialize on load
-        applyTranslations();
         initializeStars();
     </script>
 </body>

@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHM Resources</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(to right, #4a90e2, #357abd);
+            color: white;
+            padding: 15px 20px;
+            margin: -20px -20px 20px -20px;
+            border-radius: 0;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 0;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            background-color: rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            color: white;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 14px;
+        }
+
+        .tab:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .tab.active {
+            background-color: white;
+            color: #4a90e2;
+            font-weight: bold;
+        }
+
+        .search-container {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #4a90e2;
+        }
+
+        .clear-search {
+            padding: 12px 20px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        .clear-search:hover {
+            background-color: #c0392b;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #4a90e2;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            display: flex;
+            gap: 15px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #fafafa;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .card:hover {
+            border-color: #4a90e2;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .card.starred {
+            background-color: #fff9e6;
+            border-color: #ffd700;
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #e8f4fd;
+            border-radius: 6px;
+            font-size: 24px;
+        }
+
+        .card-content {
+            flex: 1;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .card-description {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .star-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 5px;
+            transition: transform 0.2s;
+        }
+
+        .star-btn:hover {
+            transform: scale(1.2);
+        }
+
+        .star-btn.starred {
+            color: #ffd700;
+        }
+
+        .star-btn:not(.starred) {
+            color: #ccc;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+            font-size: 16px;
+        }
+
+        .starred-section {
+            background: linear-gradient(to right, #fff9e6, #fffbf0);
+            border: 2px solid #ffd700;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .header {
+                margin: -10px -10px 15px -10px;
+                padding: 10px;
+            }
+
+            .header h1 {
+                font-size: 20px;
+            }
+
+            .tab {
+                padding: 8px 15px;
+                font-size: 12px;
+            }
+
+            .section {
+                padding: 15px;
+            }
+
+            .section-title {
+                font-size: 18px;
+            }
+
+            .card {
+                padding: 12px;
+                gap: 10px;
+            }
+
+            .card-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+
+            .card-title {
+                font-size: 14px;
+            }
+
+            .card-description {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>AHM Resources</h1>
+        <div class="tabs">
+            <div class="tab">User</div>
+            <div class="tab">Manager</div>
+            <div class="tab active">AHM Operations</div>
+        </div>
+    </div>
+
+    <div class="search-container">
+        <input type="text" class="search-input" id="searchInput" placeholder="Quick search cards...">
+        <button class="clear-search" id="clearSearch">Clear</button>
+    </div>
+
+    <div id="starredSection"></div>
+
+    <div id="sectionsContainer">
+        <div class="section" data-section="Fault Item History">
+            <h2 class="section-title">Fault Item History</h2>
+            <div class="cards-grid">
+                <div class="card" data-title="MMSG and Fault History" data-description="Repeat, occurrence, and history reports for MMSG and Faults">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">📊</div>
+                    <div class="card-content">
+                        <div class="card-title">MMSG and Fault History</div>
+                        <div class="card-description">Repeat, occurrence, and history reports for MMSG and Faults</div>
+                    </div>
+                </div>
+                <div class="card" data-title="Graphical Message History" data-description="Plot showing faults for an airplane or light flight">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">📈</div>
+                    <div class="card-content">
+                        <div class="card-title">Graphical Message History</div>
+                        <div class="card-description">Plot showing faults for an airplane or light flight</div>
+                    </div>
+                </div>
+                <div class="card" data-title="Recent Graphical Msg. Reports" data-description="View the results of previously run e-mailed reports (7 Days worth)">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">📑</div>
+                    <div class="card-content">
+                        <div class="card-title">Recent Graphical Msg. Reports</div>
+                        <div class="card-description">View the results of previously run e-mailed reports (7 Days worth)</div>
+                    </div>
+                </div>
+                <div class="card" data-title="Tabular Message History" data-description="View Table showing number of faults for a fleet by MMSG or FDE">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">📋</div>
+                    <div class="card-content">
+                        <div class="card-title">Tabular Message History</div>
+                        <div class="card-description">View Table showing number of faults for a fleet by MMSG or FDE</div>
+                    </div>
+                </div>
+                <div class="card" data-title="Recent Tabular Msg. Reports" data-description="View the results of previously run e-mailed reports (7 Days worth)">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">🔍</div>
+                    <div class="card-content">
+                        <div class="card-title">Recent Tabular Msg. Reports</div>
+                        <div class="card-description">View the results of previously run e-mailed reports (7 Days worth)</div>
+                    </div>
+                </div>
+                <div class="card" data-title="Maintenance Message History" data-description="Table of specific MMSGs for an airplane or flight">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">🛠️</div>
+                    <div class="card-content">
+                        <div class="card-title">Maintenance Message History</div>
+                        <div class="card-description">Table of specific MMSGs for an airplane or flight</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" data-section="Reports">
+            <h2 class="section-title">Reports</h2>
+            <div class="cards-grid">
+                <div class="card" data-title="Repetitive Defects" data-description="List of repetitive fault conditions based on user-defined units">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">🔄</div>
+                    <div class="card-content">
+                        <div class="card-title">Repetitive Defects</div>
+                        <div class="card-description">List of repetitive fault conditions based on user-defined units</div>
+                    </div>
+                </div>
+                <div class="card" data-title="Flight Leg History" data-description="List of flight legs for one airplane as far back as 12 months">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">✈️</div>
+                    <div class="card-content">
+                        <div class="card-title">Flight Leg History</div>
+                        <div class="card-description">List of flight legs for one airplane as far back as 12 months</div>
+                    </div>
+                </div>
+                <div class="card" data-title="Asset Tracking" data-description="APU and engine tracking by serial number for Boeing airplanes only">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">🎯</div>
+                    <div class="card-content">
+                        <div class="card-title">Asset Tracking</div>
+                        <div class="card-description">APU and engine tracking by serial number for Boeing airplanes only</div>
+                    </div>
+                </div>
+                <div class="card" data-title="Airplane 'Health' Ranking" data-description="Ranking of aircraft based on a user-defined weighted formula">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">💚</div>
+                    <div class="card-content">
+                        <div class="card-title">Airplane 'Health' Ranking</div>
+                        <div class="card-description">Ranking of aircraft based on a user-defined weighted formula</div>
+                    </div>
+                </div>
+                <div class="card" data-title="Action-Taken Summary" data-description="List of AHM action-taken entries by airplane or fleet">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">📝</div>
+                    <div class="card-content">
+                        <div class="card-title">Action-Taken Summary</div>
+                        <div class="card-description">List of AHM action-taken entries by airplane or fleet</div>
+                    </div>
+                </div>
+                <div class="card" data-title="Specific Fault Research" data-description="View of Fault Item Details for a specified FDE or MMSG for Boeing airplanes only">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">🔬</div>
+                    <div class="card-content">
+                        <div class="card-title">Specific Fault Research</div>
+                        <div class="card-description">View of Fault Item Details for a specified FDE or MMSG for Boeing airplanes only</div>
+                    </div>
+                </div>
+                <div class="card" data-title="AHM Alerts" data-description="List of alertable conditions being monitored by AHM">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">🔔</div>
+                    <div class="card-content">
+                        <div class="card-title">AHM Alerts</div>
+                        <div class="card-description">List of alertable conditions being monitored by AHM</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" data-section="Tools">
+            <h2 class="section-title">Tools</h2>
+            <div class="cards-grid">
+                <div class="card" data-title="Fleet Monitor" data-description="Start Fleet Monitor utility for 'pop-up' notification of faults">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">🛰️</div>
+                    <div class="card-content">
+                        <div class="card-title">Fleet Monitor</div>
+                        <div class="card-description">Start Fleet Monitor utility for 'pop-up' notification of faults</div>
+                    </div>
+                </div>
+                <div class="card" data-title="Service Summary" data-description="View plotted data for serviceable items across your fleet for Boeing airplanes only">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">📊</div>
+                    <div class="card-content">
+                        <div class="card-title">Service Summary</div>
+                        <div class="card-description">View plotted data for serviceable items across your fleet for Boeing airplanes only</div>
+                    </div>
+                </div>
+                <div class="card" data-title="ACMS Report Viewer" data-description="Generate lists of ACMS reports downlinked from your fleet for Boeing airplanes only">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">📦</div>
+                    <div class="card-content">
+                        <div class="card-title">ACMS Report Viewer</div>
+                        <div class="card-description">Generate lists of ACMS reports downlinked from your fleet for Boeing airplanes only</div>
+                    </div>
+                </div>
+                <div class="card" data-title="Maintenance Pages" data-description="Generate lists of Maintenance Pages downloaded from your fleet for Boeing airplanes only">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">📄</div>
+                    <div class="card-content">
+                        <div class="card-title">Maintenance Pages</div>
+                        <div class="card-description">Generate lists of Maintenance Pages downloaded from your fleet for Boeing airplanes only</div>
+                    </div>
+                </div>
+                <div class="card" data-title="Data Warehouse Browser" data-description="Export downlinked telemetry data from AHM's Data Warehouse for Boeing airplanes only">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">🗄️</div>
+                    <div class="card-content">
+                        <div class="card-title">Data Warehouse Browser</div>
+                        <div class="card-description">Export downlinked telemetry data from AHM's Data Warehouse for Boeing airplanes only</div>
+                    </div>
+                </div>
+                <div class="card" data-title="My Recent Requests" data-description="View the results of previously run data reports (7 Days worth) for Boeing airplanes only">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">⏱️</div>
+                    <div class="card-content">
+                        <div class="card-title">My Recent Requests</div>
+                        <div class="card-description">View the results of previously run data reports (7 Days worth) for Boeing airplanes only</div>
+                    </div>
+                </div>
+                <div class="card" data-title="Compare Configuration" data-description="Compare aircraft generated configuration (CFG) reports with airline defined authorized configurations for Boeing airplanes only">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">⚙️</div>
+                    <div class="card-content">
+                        <div class="card-title">Compare Configuration</div>
+                        <div class="card-description">Compare aircraft generated configuration (CFG) reports with airline defined authorized configurations for Boeing airplanes only</div>
+                    </div>
+                </div>
+                <div class="card" data-title="Airplane Report Viewer" data-description="Search all types of AHM' (ACARS or otherwise) reports off-loaded from your fleet">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">🔎</div>
+                    <div class="card-content">
+                        <div class="card-title">Airplane Report Viewer</div>
+                        <div class="card-description">Search all types of AHM' (ACARS or otherwise) reports off-loaded from your fleet</div>
+                    </div>
+                </div>
+                <div class="card" data-title="Lock or Freeze an AHM Airplane" data-description="Freeze the current AHM state of a monitored airplane">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">🔒</div>
+                    <div class="card-content">
+                        <div class="card-title">Lock or Freeze an AHM Airplane</div>
+                        <div class="card-description">Freeze the current AHM state of a monitored airplane</div>
+                    </div>
+                </div>
+                <div class="card" data-title="AHM Onboard Report Viewer" data-description="Generate lists of AHM Onboard reports downloaded from your fleet for Boeing airplanes only">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">💻</div>
+                    <div class="card-content">
+                        <div class="card-title">AHM Onboard Report Viewer</div>
+                        <div class="card-description">Generate lists of AHM Onboard reports downloaded from your fleet for Boeing airplanes only</div>
+                    </div>
+                </div>
+                <div class="card" data-title="AHM Onboard Configuration Viewer" data-description="View AHM Onboard Configurations airplanes only">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">🖥️</div>
+                    <div class="card-content">
+                        <div class="card-title">AHM Onboard Configuration Viewer</div>
+                        <div class="card-description">View AHM Onboard Configurations airplanes only</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" data-section="E-Mail Notification Setup">
+            <h2 class="section-title">E-Mail Notification Setup</h2>
+            <div class="cards-grid">
+                <div class="card" data-title="Email Notification/AHM Notify APP" data-description="Setup one or more notification(s) using general purposed triggering logic">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">📧</div>
+                    <div class="card-content">
+                        <div class="card-title">Email Notification/AHM Notify APP</div>
+                        <div class="card-description">Setup one or more notification(s) using general purposed triggering logic</div>
+                    </div>
+                </div>
+                <div class="card" data-title="ACMS or Maintenance Page Report Forwarding" data-description="Request that an ACMS and/or Maintenance Page be forwarded to others">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">↗️</div>
+                    <div class="card-content">
+                        <div class="card-title">ACMS or Maintenance Page Report Forwarding</div>
+                        <div class="card-description">Request that an ACMS and/or Maintenance Page be forwarded to others</div>
+                    </div>
+                </div>
+                <div class="card" data-title="Nuisance Message Reminder" data-description="Request temporary prolonged report for NCJM is forwarded to others for Boeing airplanes only">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">🔕</div>
+                    <div class="card-content">
+                        <div class="card-title">Nuisance Message Reminder</div>
+                        <div class="card-description">Request temporary prolonged report for NCJM is forwarded to others for Boeing airplanes only</div>
+                    </div>
+                </div>
+                <div class="card" data-title="Monitor 'Aging' Airplanes" data-description="Setup e-mail notification when one or more airplanes stop communicating with AHM for Boeing airplanes only">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">⏰</div>
+                    <div class="card-content">
+                        <div class="card-title">Monitor 'Aging' Airplanes</div>
+                        <div class="card-description">Setup e-mail notification when one or more airplanes stop communicating with AHM for Boeing airplanes only</div>
+                    </div>
+                </div>
+                <div class="card" data-title="Fault Item Processing" data-description="Setup e-mail notifications to alert others of fault item processing events for Boeing airplanes only">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">⚠️</div>
+                    <div class="card-content">
+                        <div class="card-title">Fault Item Processing</div>
+                        <div class="card-description">Setup e-mail notifications to alert others of fault item processing events for Boeing airplanes only</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" data-section="Old E-Mail Notification System">
+            <h2 class="section-title">Old E-Mail Notification System - (This functionality is now available in the New Email Notification tool.)</h2>
+            <div class="cards-grid">
+                <div class="card" data-title="Specific Fault Item(s)" data-description="Setup e-mail notifications for one or more fault items with a specific code for Boeing airplanes only">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">🎯</div>
+                    <div class="card-content">
+                        <div class="card-title">Specific Fault Item(s)</div>
+                        <div class="card-description">Setup e-mail notifications for one or more fault items with a specific code for Boeing airplanes only</div>
+                    </div>
+                </div>
+                <div class="card" data-title="Grouped Fault Items" data-description="Setup e-mail notifications for groups of similar fault items based on high-level filtering options for Boeing airplanes only">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">📦</div>
+                    <div class="card-content">
+                        <div class="card-title">Grouped Fault Items</div>
+                        <div class="card-description">Setup e-mail notifications for groups of similar fault items based on high-level filtering options for Boeing airplanes only</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" data-section="ACARS Uplinks">
+            <h2 class="section-title">ACARS Uplinks</h2>
+            <div class="cards-grid">
+                <div class="card" data-title="Manual ACARS Uplink" data-description="Manually uplink a command sequence to an airplane">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">📡</div>
+                    <div class="card-content">
+                        <div class="card-title">Manual ACARS Uplink</div>
+                        <div class="card-description">Manually uplink a command sequence to an airplane</div>
+                    </div>
+                </div>
+                <div class="card" data-title="Event-Driven ACARS Uplink" data-description="Setup one or more rules to automatically uplink to an airplane">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">🎛️</div>
+                    <div class="card-content">
+                        <div class="card-title">Event-Driven ACARS Uplink</div>
+                        <div class="card-description">Setup one or more rules to automatically uplink to an airplane</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" data-section="Default Preferences">
+            <h2 class="section-title">Default Preferences</h2>
+            <div class="cards-grid">
+                <div class="card" data-title="Fleet Status" data-description="Default filter values for user's Fleet Status tab">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">⚙️</div>
+                    <div class="card-content">
+                        <div class="card-title">Fleet Status</div>
+                        <div class="card-description">Default filter values for user's Fleet Status tab</div>
+                    </div>
+                </div>
+                <div class="card" data-title="Actionable Items" data-description="Default filter values for user's Actionable Items tab">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">⚙️</div>
+                    <div class="card-content">
+                        <div class="card-title">Actionable Items</div>
+                        <div class="card-description">Default filter values for user's Actionable Items tab</div>
+                    </div>
+                </div>
+                <div class="card" data-title="Work Items" data-description="Default filter values for user's Work Items tab">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">🔧</div>
+                    <div class="card-content">
+                        <div class="card-title">Work Items</div>
+                        <div class="card-description">Default filter values for user's Work Items tab</div>
+                    </div>
+                </div>
+                <div class="card" data-title="History Items" data-description="Default filter values for user's History Items tab">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">📚</div>
+                    <div class="card-content">
+                        <div class="card-title">History Items</div>
+                        <div class="card-description">Default filter values for user's History Items tab</div>
+                    </div>
+                </div>
+                <div class="card" data-title="Repetitive Defects" data-description="Default filter values for Repetitive Defects report">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">🔁</div>
+                    <div class="card-content">
+                        <div class="card-title">Repetitive Defects</div>
+                        <div class="card-description">Default filter values for Repetitive Defects report</div>
+                    </div>
+                </div>
+                <div class="card" data-title="Fault Item Details" data-description="Default filter values for Fault Item Details pop-up">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">📋</div>
+                    <div class="card-content">
+                        <div class="card-title">Fault Item Details</div>
+                        <div class="card-description">Default filter values for Fault Item Details pop-up</div>
+                    </div>
+                </div>
+                <div class="card" data-title="Fleet Monitor" data-description="Default filter values for Fleet Monitor tool">
+                    <button class="star-btn" onclick="toggleStar(this)">★</button>
+                    <div class="card-icon">🛰️</div>
+                    <div class="card-content">
+                        <div class="card-title">Fleet Monitor</div>
+                        <div class="card-description">Default filter values for Fleet Monitor tool</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load starred items from localStorage
+        let starredItems = JSON.parse(localStorage.getItem('starredItems') || '[]');
+
+        // Initialize starred states
+        function initializeStars() {
+            document.querySelectorAll('.card').forEach(card => {
+                const title = card.getAttribute('data-title');
+                const starBtn = card.querySelector('.star-btn');
+                if (starredItems.includes(title)) {
+                    card.classList.add('starred');
+                    starBtn.classList.add('starred');
+                }
+            });
+            updateStarredSection();
+        }
+
+        // Toggle star
+        function toggleStar(btn) {
+            event.stopPropagation();
+            const card = btn.closest('.card');
+            const title = card.getAttribute('data-title');
+            
+            if (starredItems.includes(title)) {
+                starredItems = starredItems.filter(item => item !== title);
+                card.classList.remove('starred');
+                btn.classList.remove('starred');
+            } else {
+                starredItems.push(title);
+                card.classList.add('starred');
+                btn.classList.add('starred');
+            }
+            
+            localStorage.setItem('starredItems', JSON.stringify(starredItems));
+            updateStarredSection();
+        }
+
+        // Update starred section
+        function updateStarredSection() {
+            const starredSection = document.getElementById('starredSection');
+            
+            if (starredItems.length === 0) {
+                starredSection.innerHTML = '';
+                return;
+            }
+
+            const starredCards = [];
+            document.querySelectorAll('.card').forEach(card => {
+                const title = card.getAttribute('data-title');
+                if (starredItems.includes(title)) {
+                    starredCards.push(card.cloneNode(true));
+                }
+            });
+
+            if (starredCards.length > 0) {
+                starredSection.innerHTML = `
+                    <div class="section starred-section">
+                        <h2 class="section-title">⭐ Starred Items</h2>
+                        <div class="cards-grid">
+                            ${starredCards.map(card => card.outerHTML).join('')}
+                        </div>
+                    </div>
+                `;
+
+                // Re-attach event listeners to cloned star buttons
+                starredSection.querySelectorAll('.star-btn').forEach(btn => {
+                    btn.onclick = function() { toggleStar(this); };
+                });
+            }
+        }
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const clearSearch = document.getElementById('clearSearch');
+
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase().trim();
+            
+            document.querySelectorAll('.section').forEach(section => {
+                if (section.classList.contains('starred-section')) return;
+                
+                const cards = section.querySelectorAll('.card');
+                let visibleCount = 0;
+                
+                cards.forEach(card => {
+                    const title = card.getAttribute('data-title').toLowerCase();
+                    const description = card.getAttribute('data-description').toLowerCase();
+                    
+                    if (searchTerm === '' || title.includes(searchTerm) || description.includes(searchTerm)) {
+                        card.style.display = 'flex';
+                        visibleCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                
+                // Hide section if no visible cards
+                if (visibleCount === 0) {
+                    section.style.display = 'none';
+                } else {
+                    section.style.display = 'block';
+                }
+            });
+
+            // Show "no results" message if needed
+            const visibleSections = Array.from(document.querySelectorAll('.section:not(.starred-section)')).filter(s => s.style.display !== 'none');
+            if (searchTerm !== '' && visibleSections.length === 0) {
+                if (!document.getElementById('noResults')) {
+                    const noResults = document.createElement('div');
+                    noResults.id = 'noResults';
+                    noResults.className = 'no-results';
+                    noResults.innerHTML = '<p>No cards found matching your search.</p>';
+                    document.getElementById('sectionsContainer').appendChild(noResults);
+                }
+            } else {
+                const noResults = document.getElementById('noResults');
+                if (noResults) noResults.remove();
+            }
+        });
+
+        clearSearch.addEventListener('click', function() {
+            searchInput.value = '';
+            searchInput.dispatchEvent(new Event('input'));
+        });
+
+        // Initialize on load
+        initializeStars();
+    </script>
+</body>
+</html>

@@ -102,10 +102,6 @@
             color: #333;
         }
 
-        .search-input:not(:placeholder-shown) ~ .clear-search {
-            display: block;
-        }
-
         .section {
             margin-bottom: 30px;
             background-color: white;
@@ -766,6 +762,9 @@
         searchInput.addEventListener('input', function() {
             const searchTerm = this.value.toLowerCase().trim();
             
+            // Toggle clear button visibility
+            clearSearch.style.display = this.value ? 'block' : 'none';
+            
             document.querySelectorAll('.section').forEach(section => {
                 if (section.classList.contains('starred-section')) return;
                 
@@ -810,6 +809,7 @@
 
         clearSearch.addEventListener('click', function() {
             searchInput.value = '';
+            clearSearch.style.display = 'none';
             searchInput.dispatchEvent(new Event('input'));
         });
 

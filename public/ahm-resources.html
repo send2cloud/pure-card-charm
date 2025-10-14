@@ -693,30 +693,39 @@
         function updateStarredSection() {
             const starredSection = document.getElementById('starredSection');
             
+            // Clear completely first
+            starredSection.innerHTML = '';
+            
             if (starredItems.length === 0) {
-                starredSection.innerHTML = '';
                 return;
             }
 
-            // Get unique starred cards from original sections only
-            const starredCardsMap = new Map();
-            document.querySelectorAll('#sectionsContainer .card').forEach(card => {
-                const title = card.getAttribute('data-title');
-                if (starredItems.includes(title) && !starredCardsMap.has(title)) {
-                    starredCardsMap.set(title, card.cloneNode(true));
+            // Build starred cards array based on starredItems order
+            const starredCardsHTML = [];
+            const processedTitles = new Set();
+            
+            // Iterate through starredItems to maintain order
+            starredItems.forEach(starredTitle => {
+                // Skip if already processed (prevent duplicates)
+                if (processedTitles.has(starredTitle)) {
+                    return;
+                }
+                processedTitles.add(starredTitle);
+                
+                // Find the first card with this title in the original sections
+                const originalCard = document.querySelector(`#sectionsContainer .card[data-title="${starredTitle}"]`);
+                if (originalCard) {
+                    const clonedCard = originalCard.cloneNode(true);
+                    starredCardsHTML.push(clonedCard.outerHTML);
                 }
             });
 
-            if (starredCardsMap.size > 0) {
-                const cardsHTML = Array.from(starredCardsMap.values())
-                    .map(card => card.outerHTML)
-                    .join('');
-                    
+            if (starredCardsHTML.length > 0) {
                 starredSection.innerHTML = `
                     <div class="section starred-section">
                         <h2 class="section-title">⭐ Starred Items</h2>
                         <div class="cards-grid">
-                            ${cardsHTML}
+                            ${starredCardsHTML.join('')}
                         </div>
                     </div>
                 `;

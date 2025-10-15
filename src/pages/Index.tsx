@@ -72,6 +72,18 @@ const Index = () => {
               </a>
             </CardContent>
           </Card>
+
+          <Card className="transition-all hover:shadow-lg">
+            <CardHeader>
+              <CardTitle>Version 6</CardTitle>
+              <CardDescription>Compact mode with tighter spacing</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <a href="/ahm-resources-v6.html" target="_blank" rel="noopener noreferrer">
+                <Button className="w-full">Open Version 6</Button>
+              </a>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>

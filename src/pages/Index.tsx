@@ -12,7 +12,7 @@ const Index = () => {
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <Card className="transition-all hover:shadow-lg">
             <CardHeader>
               <CardTitle>Version 1</CardTitle>
@@ -57,6 +57,18 @@ const Index = () => {
             <CardContent>
               <a href="/ahm-resources-v4.html" target="_blank" rel="noopener noreferrer">
                 <Button className="w-full">Open Version 4</Button>
+              </a>
+            </CardContent>
+          </Card>
+
+          <Card className="transition-all hover:shadow-lg">
+            <CardHeader>
+              <CardTitle>Version 5</CardTitle>
+              <CardDescription>Color-coded icons by section</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <a href="/ahm-resources-v5.html" target="_blank" rel="noopener noreferrer">
+                <Button className="w-full">Open Version 5</Button>
               </a>
             </CardContent>
           </Card>

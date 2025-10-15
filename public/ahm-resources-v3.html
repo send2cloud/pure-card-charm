@@ -288,6 +288,10 @@
             transform: scale(1.1);
         }
 
+        .star-btn:hover:not(.starred) {
+            color: #80868b;
+        }
+
         .star-btn.starred {
             color: #fbbc04;
             opacity: 1;
@@ -833,7 +837,7 @@
             if (starredCardsHTML.length > 0) {
                 starredSection.innerHTML = `
                     <div class="section starred-section">
-                        <h2 class="section-title">⭐ Starred Items</h2>
+                        <h2 class="section-title">Starred Items</h2>
                         <div class="cards-grid">
                             ${starredCardsHTML.join('')}
                         </div>

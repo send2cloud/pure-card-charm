@@ -362,6 +362,11 @@
             font-variation-settings: 'FILL' 0;
         }
 
+        .star-btn:hover:not(.starred) .material-icons-outlined {
+            font-variation-settings: 'FILL' 0;
+            color: #80868b;
+        }
+
         .star-btn.starred {
             color: #fbbc04;
             opacity: 1;
@@ -898,7 +903,7 @@
             if (starredCards.length > 0) {
                 const section = document.createElement('div');
                 section.className = 'section starred-section';
-                section.innerHTML = '<h2 class="section-title">⭐ Starred Resources</h2><div class="cards-grid"></div>';
+                section.innerHTML = '<h2 class="section-title">Starred Resources</h2><div class="cards-grid"></div>';
                 const grid = section.querySelector('.cards-grid');
                 
                 starredCards.forEach(card => {

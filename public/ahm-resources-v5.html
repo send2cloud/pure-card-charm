@@ -263,47 +263,47 @@
         }
 
         /* Fault Item History - Saturated Yellow */
-        [data-section="Fault Item History"] .card-icon {
+        .card[data-section="Fault Item History"] .card-icon {
             background: #fef9ed;
         }
 
-        [data-section="Fault Item History"] .card-icon .material-icons-outlined {
+        .card[data-section="Fault Item History"] .card-icon .material-icons-outlined {
             color: #D4AF37;
         }
 
         /* ACARS Uplink - Blue-Green */
-        [data-section="ACARS Uplink"] .card-icon {
+        .card[data-section="ACARS Uplink"] .card-icon {
             background: #E0F2F1;
         }
 
-        [data-section="ACARS Uplink"] .card-icon .material-icons-outlined {
+        .card[data-section="ACARS Uplink"] .card-icon .material-icons-outlined {
             color: #00897B;
         }
 
         /* Reports - Blue (keep default) */
-        [data-section="Reports"] .card-icon {
+        .card[data-section="Reports"] .card-icon {
             background: #e8f0fe;
         }
 
-        [data-section="Reports"] .card-icon .material-icons-outlined {
+        .card[data-section="Reports"] .card-icon .material-icons-outlined {
             color: #1976d2;
         }
 
         /* Tools - Urban Gray */
-        [data-section="Tools"] .card-icon {
+        .card[data-section="Tools"] .card-icon {
             background: #f5f5f5;
         }
 
-        [data-section="Tools"] .card-icon .material-icons-outlined {
+        .card[data-section="Tools"] .card-icon .material-icons-outlined {
             color: #757575;
         }
 
         /* E-Mail Notification Setup - Blue */
-        [data-section="E-Mail Notification Setup"] .card-icon {
+        .card[data-section="E-Mail Notification Setup"] .card-icon {
             background: #e3f2fd;
         }
 
-        [data-section="E-Mail Notification Setup"] .card-icon .material-icons-outlined {
+        .card[data-section="E-Mail Notification Setup"] .card-icon .material-icons-outlined {
             color: #1565c0;
         }
 
@@ -980,6 +980,14 @@
         });
 
         // Initialize
+        // Copy data-section from parent sections to cards
+        document.querySelectorAll('.section[data-section]').forEach(section => {
+            const sectionName = section.getAttribute('data-section');
+            section.querySelectorAll('.card').forEach(card => {
+                card.setAttribute('data-section', sectionName);
+            });
+        });
+        
         loadStarredItems();
         window.toggleStar = toggleStar;
     </script>

@@ -184,7 +184,7 @@
             margin-bottom: 32px;
             background: white;
             border-radius: 8px;
-            border: 1px solid #808080;
+            border: 1px solid #A0A0A0;
             overflow: hidden;
             box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.1);
         }
@@ -197,7 +197,7 @@
             background: #F7F7F7;
             padding: 16px 24px;
             margin: 0;
-            border-bottom: 1px solid #808080;
+            border-bottom: 1px solid #A0A0A0;
         }
 
         .cards-grid {
@@ -224,7 +224,7 @@
             display: flex;
             gap: 16px;
             padding: 16px;
-            border: 1px solid #e8eaed;
+            border: 1px solid #B8B8B8;
             border-radius: 8px;
             background: white;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -248,22 +248,31 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #e8f0fe;
+            background: #BDBDBD;
             border-radius: 8px;
         }
 
         .card-icon .material-icons-outlined {
             font-size: 24px;
-            color: #1976d2;
+            color: #000000;
         }
 
-        /* Fault Item History - Dirty Yellow */
+        /* Fault Item History - Saturated Yellow */
         [data-section="Fault Item History"] .card-icon {
             background: #fef9ed;
         }
 
         [data-section="Fault Item History"] .card-icon .material-icons-outlined {
-            color: #D3BD63;
+            color: #D4AF37;
+        }
+
+        /* ACARS Uplink - Peacock Blue */
+        [data-section="ACARS Uplink"] .card-icon {
+            background: #E0F4F4;
+        }
+
+        [data-section="ACARS Uplink"] .card-icon .material-icons-outlined {
+            color: #00B4B4;
         }
 
         /* Reports - Blue (keep default) */

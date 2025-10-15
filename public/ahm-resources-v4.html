@@ -780,13 +780,13 @@
 
         // Load starred items from localStorage
         function loadStarredItems() {
-            const starred = JSON.parse(localStorage.getItem('starredCards') || '[]');
+            const starred = [...new Set(JSON.parse(localStorage.getItem('starredCards-v4') || '[]'))];
             starred.forEach(title => {
-                const card = document.querySelector(`[data-title="${title}"]`);
-                if (card) {
+                const cards = document.querySelectorAll(`[data-title="${title}"]`);
+                cards.forEach(card => {
                     card.classList.add('starred');
                     card.querySelector('.star-btn').classList.add('starred');
-                }
+                });
             });
             updateStarredSection();
         }
@@ -795,22 +795,47 @@
         function toggleStar(btn) {
             const card = btn.closest('.card');
             const title = card.dataset.title;
-            card.classList.toggle('starred');
-            btn.classList.toggle('starred');
             
-            let starred = JSON.parse(localStorage.getItem('starredCards') || '[]');
-            if (card.classList.contains('starred')) {
-                starred.push(title);
-            } else {
+            let starred = [...new Set(JSON.parse(localStorage.getItem('starredCards-v4') || '[]'))];
+            const isStarred = starred.includes(title);
+            
+            if (isStarred) {
                 starred = starred.filter(t => t !== title);
+            } else {
+                starred.push(title);
             }
-            localStorage.setItem('starredCards', JSON.stringify(starred));
+            
+            // Ensure uniqueness
+            starred = [...new Set(starred)];
+            
+            // Update all cards with this title
+            document.querySelectorAll(`[data-title="${title}"]`).forEach(c => {
+                const starBtn = c.querySelector('.star-btn');
+                if (isStarred) {
+                    c.classList.remove('starred');
+                    starBtn.classList.remove('starred');
+                } else {
+                    c.classList.add('starred');
+                    starBtn.classList.add('starred');
+                }
+            });
+            
+            localStorage.setItem('starredCards-v4', JSON.stringify(starred));
             updateStarredSection();
         }
 
         // Update starred section
         function updateStarredSection() {
-            const starredCards = document.querySelectorAll('.card.starred');
+            const starred = [...new Set(JSON.parse(localStorage.getItem('starredCards-v4') || '[]'))];
+            const starredCards = [];
+            
+            starred.forEach(title => {
+                const card = document.querySelector(`#sectionsContainer [data-title="${title}"]`);
+                if (card && card.classList.contains('starred')) {
+                    starredCards.push(card);
+                }
+            });
+            
             if (starredCards.length > 0) {
                 const section = document.createElement('div');
                 section.className = 'section starred-section';

@@ -760,8 +760,8 @@
     </div>
 
     <script>
-        // Load starred items from localStorage
-        let starredItems = JSON.parse(localStorage.getItem('starredItems-v3') || '[]');
+        // Load starred items from localStorage and ensure uniqueness
+        let starredItems = [...new Set(JSON.parse(localStorage.getItem('starredItems-v3') || '[]'))];
 
         // Initialize starred states
         function initializeStars() {
@@ -787,10 +787,11 @@
             if (isStarred) {
                 starredItems = starredItems.filter(item => item !== title);
             } else {
-                if (!starredItems.includes(title)) {
-                    starredItems.push(title);
-                }
+                starredItems.push(title);
             }
+            
+            // Ensure uniqueness
+            starredItems = [...new Set(starredItems)];
             
             // Update ALL cards with this title
             document.querySelectorAll(`.card[data-title="${title}"]`).forEach(c => {

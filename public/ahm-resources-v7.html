@@ -103,7 +103,7 @@
             background: white;
             border-radius: 12px;
             padding: 1.5rem;
-            border: 2px solid transparent;
+            border: 1.5px solid #e5e7eb;
             transition: all 0.3s ease;
             cursor: pointer;
             position: relative;
@@ -185,8 +185,8 @@
 
         /* Pinned section - Red/Pink and Yellow */
         [data-section="pinned"] .card:nth-child(1) {
-            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
-            border-color: #fca5a5;
+            background: #fef5f5;
+            border-color: #f87171;
         }
 
         [data-section="pinned"] .card:nth-child(1) .card-icon {
@@ -195,8 +195,8 @@
         }
 
         [data-section="pinned"] .card:nth-child(2) {
-            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-            border-color: #fcd34d;
+            background: #fffdf7;
+            border-color: #fbbf24;
         }
 
         [data-section="pinned"] .card:nth-child(2) .card-icon {
@@ -206,19 +206,19 @@
 
         /* Aircraft Data - Light Blue */
         [data-section="aircraft-data"] .card {
-            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
-            border-color: #93c5fd;
+            background: #f0f9ff;
+            border-color: #38bdf8;
         }
 
         [data-section="aircraft-data"] .card-icon {
-            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
             color: white;
         }
 
         /* Tools - Light Pink */
         [data-section="tools"] .card {
-            background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%);
-            border-color: #f9a8d4;
+            background: #fdf4f8;
+            border-color: #f472b6;
         }
 
         [data-section="tools"] .card-icon {
@@ -228,18 +228,18 @@
 
         /* Fault Research - Light Green */
         [data-section="fault-research"] .card {
-            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
-            border-color: #6ee7b7;
+            background: #f0fdf8;
+            border-color: #4ade80;
         }
 
         [data-section="fault-research"] .card-icon {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
             color: white;
         }
 
         /* Metrics & Reports - Light Orange */
         [data-section="metrics-reports"] .card {
-            background: linear-gradient(135deg, #fed7aa 0%, #fdba74 100%);
+            background: #fff8f0;
             border-color: #fb923c;
         }
 
@@ -250,8 +250,8 @@
 
         /* Performance - Light Gray */
         [data-section="performance"] .card {
-            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
-            border-color: #d1d5db;
+            background: #f9fafb;
+            border-color: #9ca3af;
         }
 
         [data-section="performance"] .card-icon {
@@ -261,8 +261,8 @@
 
         /* Performance - Fuel Usage special card (yellow) */
         [data-section="performance"] .card[data-card-id="fuel-usage-perf"] {
-            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-            border-color: #fcd34d;
+            background: #fffdf7;
+            border-color: #fbbf24;
         }
 
         [data-section="performance"] .card[data-card-id="fuel-usage-perf"] .card-icon {
@@ -273,8 +273,8 @@
         /* Notification - Mixed Yellow and Green */
         [data-section="notification"] .card:nth-child(1),
         [data-section="notification"] .card:nth-child(3) {
-            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-            border-color: #fcd34d;
+            background: #fffdf7;
+            border-color: #fbbf24;
         }
 
         [data-section="notification"] .card:nth-child(1) .card-icon,
@@ -285,20 +285,20 @@
 
         [data-section="notification"] .card:nth-child(2),
         [data-section="notification"] .card:nth-child(4) {
-            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
-            border-color: #6ee7b7;
+            background: #f0fdf8;
+            border-color: #4ade80;
         }
 
         [data-section="notification"] .card:nth-child(2) .card-icon,
         [data-section="notification"] .card:nth-child(4) .card-icon {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
             color: white;
         }
 
         /* Uplinks - Light Pink/Red */
         [data-section="uplinks"] .card {
-            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
-            border-color: #fca5a5;
+            background: #fef5f5;
+            border-color: #f87171;
         }
 
         [data-section="uplinks"] .card-icon {
@@ -306,10 +306,9 @@
             color: white;
         }
 
-        /* Starred section - Yellow border and background */
-        .starred-section .card {
-            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
-            border-color: #fbbf24;
+        /* Pinned section (was Starred) - inherit original section colors */
+        .pinned-section .card {
+            /* Cards will maintain their original section styling */
         }
 
         .card.hidden {
@@ -760,37 +759,37 @@
     </div>
 
     <script>
-        // Star functionality with localStorage
-        const STORAGE_KEY = 'starredCards-v7';
-        let starredCards = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+        // Star functionality with localStorage - now called "Pinned"
+        const STORAGE_KEY = 'pinnedCards-v7';
+        let pinnedCards = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
 
         function toggleStar(event, cardId) {
             event.stopPropagation();
             const button = event.currentTarget;
             const card = button.closest('.card');
             
-            if (starredCards.includes(cardId)) {
-                starredCards = starredCards.filter(id => id !== cardId);
+            if (pinnedCards.includes(cardId)) {
+                pinnedCards = pinnedCards.filter(id => id !== cardId);
                 button.classList.remove('starred');
             } else {
-                starredCards.push(cardId);
+                pinnedCards.push(cardId);
                 button.classList.add('starred');
             }
             
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(starredCards));
-            renderStarredSection();
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(pinnedCards));
+            renderPinnedSection();
         }
 
-        function renderStarredSection() {
-            const starredSection = document.getElementById('starredSection');
+        function renderPinnedSection() {
+            const pinnedSection = document.getElementById('starredSection');
             
-            if (starredCards.length > 0) {
+            if (pinnedCards.length > 0) {
                 const section = document.createElement('div');
-                section.className = 'section starred-section';
-                section.innerHTML = '<h2 class="section-title">Starred Resources</h2><div class="cards-grid"></div>';
+                section.className = 'section pinned-section';
+                section.innerHTML = '<h2 class="section-title">Pinned</h2><div class="cards-grid"></div>';
                 const grid = section.querySelector('.cards-grid');
                 
-                starredCards.forEach(cardId => {
+                pinnedCards.forEach(cardId => {
                     const originalCard = document.querySelector(`[data-card-id="${cardId}"]`);
                     if (originalCard) {
                         const clonedCard = originalCard.cloneNode(true);
@@ -801,16 +800,16 @@
                     }
                 });
                 
-                starredSection.innerHTML = '';
-                starredSection.appendChild(section);
+                pinnedSection.innerHTML = '';
+                pinnedSection.appendChild(section);
             } else {
-                starredSection.innerHTML = '';
+                pinnedSection.innerHTML = '';
             }
         }
 
         // Initialize starred states
         function initializeStars() {
-            starredCards.forEach(cardId => {
+            pinnedCards.forEach(cardId => {
                 const card = document.querySelector(`[data-card-id="${cardId}"]`);
                 if (card) {
                     const starBtn = card.querySelector('.star-btn');
@@ -819,7 +818,7 @@
                     }
                 }
             });
-            renderStarredSection();
+            renderPinnedSection();
         }
 
         // Search functionality

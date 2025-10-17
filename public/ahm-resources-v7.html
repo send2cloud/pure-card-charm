@@ -46,7 +46,7 @@
 
         .search-container {
             max-width: 600px;
-            margin: 0 auto 3rem;
+            margin: 0 0 3rem auto;
             animation: fadeIn 0.6s ease-out 0.2s both;
         }
 
@@ -188,6 +188,59 @@
         /* Icon color for all sections */
         .card-icon .material-icons-outlined {
             color: #0CA2C4;
+        }
+
+        /* Pinned section - Red/Pink and Yellow */
+        [data-section="pinned"] .card:nth-child(1) {
+            background: #fef5f5;
+            border-color: #f87171;
+        }
+
+        [data-section="pinned"] .card:nth-child(2) {
+            background: #fffdf7;
+            border-color: #fbbf24;
+        }
+
+        /* Aircraft Data - Light Blue */
+        [data-section="aircraft-data"] .card {
+            background: #f0f9ff;
+            border-color: #38bdf8;
+        }
+
+        /* Tools - Light Pink */
+        [data-section="tools"] .card {
+            background: #fdf4f8;
+            border-color: #f472b6;
+        }
+
+        /* Fault Research - Light Green */
+        [data-section="fault-research"] .card {
+            background: #f0fdf8;
+            border-color: #4ade80;
+        }
+
+        /* Metrics & Reports - Light Orange */
+        [data-section="metrics-reports"] .card {
+            background: #fff8f0;
+            border-color: #fb923c;
+        }
+
+        /* Performance - Light Gray */
+        [data-section="performance"] .card {
+            background: #f9fafb;
+            border-color: #d1d5db;
+        }
+
+        /* Notification - Light Yellow/Green */
+        [data-section="notification"] .card {
+            background: #fefce8;
+            border-color: #bef264;
+        }
+
+        /* Uplinks - Light Pink/Peach */
+        [data-section="uplinks"] .card {
+            background: #fef5f5;
+            border-color: #fca5a5;
         }
 
         /* Performance - Light Gray */

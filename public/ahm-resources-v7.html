@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHM Resources</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+            color: #1f2937;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: #6b7280;
+        }
+
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            animation: fadeIn 0.6s ease-out 0.2s both;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            font-size: 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            background: white;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .search-box .material-icons-outlined {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+            pointer-events: none;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+            padding-left: 0.5rem;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            gap: 1rem;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 24px;
+        }
+
+        .card-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-description {
+            font-size: 0.875rem;
+            color: #6b7280;
+            line-height: 1.5;
+        }
+
+        .star-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.25rem;
+            color: #d1d5db;
+            transition: all 0.2s ease;
+            opacity: 0;
+            z-index: 10;
+        }
+
+        .card:hover .star-btn {
+            opacity: 1;
+        }
+
+        .star-btn .material-icons-outlined {
+            font-size: 20px;
+            font-variation-settings: 'FILL' 0;
+        }
+
+        .star-btn:hover:not(.starred) .material-icons-outlined {
+            font-variation-settings: 'FILL' 0;
+            color: #80868b;
+        }
+
+        .star-btn.starred {
+            color: #fbbc04;
+            opacity: 1;
+        }
+
+        .star-btn.starred .material-icons-outlined {
+            font-variation-settings: 'FILL' 1;
+        }
+
+        /* Pinned section - Red/Pink and Yellow */
+        [data-section="pinned"] .card:nth-child(1) {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-color: #fca5a5;
+        }
+
+        [data-section="pinned"] .card:nth-child(1) .card-icon {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+        }
+
+        [data-section="pinned"] .card:nth-child(2) {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-color: #fcd34d;
+        }
+
+        [data-section="pinned"] .card:nth-child(2) .card-icon {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+        }
+
+        /* Aircraft Data - Light Blue */
+        [data-section="aircraft-data"] .card {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border-color: #93c5fd;
+        }
+
+        [data-section="aircraft-data"] .card-icon {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+        }
+
+        /* Tools - Light Pink */
+        [data-section="tools"] .card {
+            background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%);
+            border-color: #f9a8d4;
+        }
+
+        [data-section="tools"] .card-icon {
+            background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+            color: white;
+        }
+
+        /* Fault Research - Light Green */
+        [data-section="fault-research"] .card {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-color: #6ee7b7;
+        }
+
+        [data-section="fault-research"] .card-icon {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        /* Metrics & Reports - Light Orange */
+        [data-section="metrics-reports"] .card {
+            background: linear-gradient(135deg, #fed7aa 0%, #fdba74 100%);
+            border-color: #fb923c;
+        }
+
+        [data-section="metrics-reports"] .card-icon {
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            color: white;
+        }
+
+        /* Performance - Light Gray */
+        [data-section="performance"] .card {
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            border-color: #d1d5db;
+        }
+
+        [data-section="performance"] .card-icon {
+            background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+            color: white;
+        }
+
+        /* Performance - Fuel Usage special card (yellow) */
+        [data-section="performance"] .card[data-card-id="fuel-usage-perf"] {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-color: #fcd34d;
+        }
+
+        [data-section="performance"] .card[data-card-id="fuel-usage-perf"] .card-icon {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+        }
+
+        /* Notification - Mixed Yellow and Green */
+        [data-section="notification"] .card:nth-child(1),
+        [data-section="notification"] .card:nth-child(3) {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-color: #fcd34d;
+        }
+
+        [data-section="notification"] .card:nth-child(1) .card-icon,
+        [data-section="notification"] .card:nth-child(3) .card-icon {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+        }
+
+        [data-section="notification"] .card:nth-child(2),
+        [data-section="notification"] .card:nth-child(4) {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-color: #6ee7b7;
+        }
+
+        [data-section="notification"] .card:nth-child(2) .card-icon,
+        [data-section="notification"] .card:nth-child(4) .card-icon {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        /* Uplinks - Light Pink/Red */
+        [data-section="uplinks"] .card {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-color: #fca5a5;
+        }
+
+        [data-section="uplinks"] .card-icon {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+        }
+
+        /* Starred section - Yellow border and background */
+        .starred-section .card {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            border-color: #fbbf24;
+        }
+
+        .card.hidden {
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .star-btn {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>AHM Resources</h1>
+            <p>Quick access to airplane health monitoring tools and data</p>
+        </div>
+
+        <div class="search-container">
+            <div class="search-box">
+                <span class="material-icons-outlined">search</span>
+                <input type="text" id="searchInput" placeholder="Quick Search">
+            </div>
+        </div>
+
+        <div id="starredSection"></div>
+
+        <div class="section" data-section="pinned">
+            <h2 class="section-title">Pinned</h2>
+            <div class="cards-grid">
+                <div class="card" data-section="pinned" data-card-id="event-driven-uplinks-pinned">
+                    <div class="card-icon">
+                        <span class="material-icons-outlined">flight_takeoff</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Event Driven Uplinks</h3>
+                        <p class="card-description">Plot showing faults for an airplane or flight</p>
+                    </div>
+                    <button class="star-btn" onclick="toggleStar(event, 'event-driven-uplinks-pinned')">
+                        <span class="material-icons-outlined">star</span>
+                    </button>
+                </div>
+                <div class="card" data-section="pinned" data-card-id="fuel-usage-pinned">
+                    <div class="card-icon">
+                        <span class="material-icons-outlined">local_gas_station</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Fuel Usage</h3>
+                        <p class="card-description">Tabular summation of actual fuel consumption and emissions.</p>
+                    </div>
+                    <button class="star-btn" onclick="toggleStar(event, 'fuel-usage-pinned')">
+                        <span class="material-icons-outlined">star</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" data-section="aircraft-data">
+            <h2 class="section-title">Aircraft Data</h2>
+            <div class="cards-grid">
+                <div class="card" data-section="aircraft-data" data-card-id="airplane-report-viewer">
+                    <div class="card-icon">
+                        <span class="material-icons-outlined">description</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Airplane Report Viewer</h3>
+                        <p class="card-description">Search for formatted or raw reports (ACMS or otherwise) off-loaded from your fleet</p>
+                    </div>
+                    <button class="star-btn" onclick="toggleStar(event, 'airplane-report-viewer')">
+                        <span class="material-icons-outlined">star</span>
+                    </button>
+                </div>
+                <div class="card" data-section="aircraft-data" data-card-id="data-warehouse-browser">
+                    <div class="card-icon">
+                        <span class="material-icons-outlined">storage</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Data Warehouse Browser</h3>
+                        <p class="card-description">Export historical airplane data from AHM's Data Warehouse for Boeing airplanes only</p>
+                    </div>
+                    <button class="star-btn" onclick="toggleStar(event, 'data-warehouse-browser')">
+                        <span class="material-icons-outlined">star</span>
+                    </button>
+                </div>
+                <div class="card" data-section="aircraft-data" data-card-id="configuration-viewer">
+                    <div class="card-icon">
+                        <span class="material-icons-outlined">visibility</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Configuration Viewer</h3>
+                        <p class="card-description">View AHM Onboard Configurations</p>
+                    </div>
+                    <button class="star-btn" onclick="toggleStar(event, 'configuration-viewer')">
+                        <span class="material-icons-outlined">star</span>
+                    </button>
+                </div>
+                <div class="card" data-section="aircraft-data" data-card-id="self-service-analytics">
+                    <div class="card-icon">
+                        <span class="material-icons-outlined">analytics</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Self-Service Analytics</h3>
+                        <p class="card-description">Customizable dashboards to analyze AHM fault and parametric data</p>
+                    </div>
+                    <button class="star-btn" onclick="toggleStar(event, 'self-service-analytics')">
+                        <span class="material-icons-outlined">star</span>
+                    </button>
+                </div>
+                <div class="card" data-section="aircraft-data" data-card-id="service-resiliency">
+                    <div class="card-icon">
+                        <span class="material-icons-outlined">show_chart</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Service Resiliency</h3>
+                        <p class="card-description">View plotted data for serviceable items across your fleet for Boeing airplanes only</p>
+                    </div>
+                    <button class="star-btn" onclick="toggleStar(event, 'service-resiliency')">
+                        <span class="material-icons-outlined">star</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" data-section="tools">
+            <h2 class="section-title">Tools</h2>
+            <div class="cards-grid">
+                <div class="card" data-section="tools" data-card-id="compare-configuration">
+                    <div class="card-icon">
+                        <span class="material-icons-outlined">compare</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Compare Configuration</h3>
+                        <p class="card-description">Compare aircraft (operational) configuration with the baseline or manufacturer-authorized configuration for Boeing</p>
+                    </div>
+                    <button class="star-btn" onclick="toggleStar(event, 'compare-configuration')">
+                        <span class="material-icons-outlined">star</span>
+                    </button>
+                </div>
+                <div class="card" data-section="tools" data-card-id="lock-freeze-airplane">
+                    <div class="card-icon">
+                        <span class="material-icons-outlined">lock</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Lock or Freeze an AHM Airplane</h3>
+                        <p class="card-description">View the current AHM state of a Boeing airplane and restrict the visibility of the data</p>
+                    </div>
+                    <button class="star-btn" onclick="toggleStar(event, 'lock-freeze-airplane')">
+                        <span class="material-icons-outlined">star</span>
+                    </button>
+                </div>
+                <div class="card" data-section="tools" data-card-id="station-map">
+                    <div class="card-icon">
+                        <span class="material-icons-outlined">map</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Station Map</h3>
+                        <p class="card-description">Mobile-optimized view of fault activity on onboard airplanes at specific stations</p>
+                    </div>
+                    <button class="star-btn" onclick="toggleStar(event, 'station-map')">
+                        <span class="material-icons-outlined">star</span>
+                    </button>
+                </div>
+                <div class="card" data-section="tools" data-card-id="ahm-alert-catalog">
+                    <div class="card-icon">
+                        <span class="material-icons-outlined">notification_important</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">AHM Alert Catalog</h3>
+                        <p class="card-description">List of all alerts available to your airline</p>
+                    </div>
+                    <button class="star-btn" onclick="toggleStar(event, 'ahm-alert-catalog')">
+                        <span class="material-icons-outlined">star</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" data-section="fault-research">
+            <h2 class="section-title">Fault Research</h2>
+            <div class="cards-grid">
+                <div class="card" data-section="fault-research" data-card-id="graphical-message-history">
+                    <div class="card-icon">
+                        <span class="material-icons-outlined">timeline</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Graphical Message History</h3>
+                        <p class="card-description">Plot showing faults for an airplane or flight</p>
+                    </div>
+                    <button class="star-btn" onclick="toggleStar(event, 'graphical-message-history')">
+                        <span class="material-icons-outlined">star</span>
+                    </button>
+                </div>
+                <div class="card" data-section="fault-research" data-card-id="tabular-message-history">
+                    <div class="card-icon">
+                        <span class="material-icons-outlined">table_chart</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Tabular Message History</h3>
+                        <p class="card-description">Table showing number of faults for a fleet by MMSG or FDE</p>
+                    </div>
+                    <button class="star-btn" onclick="toggleStar(event, 'tabular-message-history')">
+                        <span class="material-icons-outlined">star</span>
+                    </button>
+                </div>
+                <div class="card" data-section="fault-research" data-card-id="mmsg-fault-history">
+                    <div class="card-icon">
+                        <span class="material-icons-outlined">search</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">MMSG and Fault History</h3>
+                        <p class="card-description">Repeat, Occurrence, and history reports for MMSG and Faults</p>
+                    </div>
+                    <button class="star-btn" onclick="toggleStar(event, 'mmsg-fault-history')">
+                        <span class="material-icons-outlined">star</span>
+                    </button>
+                </div>
+                <div class="card" data-section="fault-research" data-card-id="maintenance-message-history">
+                    <div class="card-icon">
+                        <span class="material-icons-outlined">build</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Maintenance Message History</h3>
+                        <p class="card-description">Table of specific MMSG for an airplane or flight</p>
+                    </div>
+                    <button class="star-btn" onclick="toggleStar(event, 'maintenance-message-history')">
+                        <span class="material-icons-outlined">star</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" data-section="metrics-reports">
+            <h2 class="section-title">Metrics & Reports</h2>
+            <div class="cards-grid">
+                <div class="card" data-section="metrics-reports" data-card-id="usage-metrics">
+                    <div class="card-icon">
+                        <span class="material-icons-outlined">assessment</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Usage Metrics</h3>
+                        <p class="card-description">View analytics related to usage of the AHM application</p>
+                    </div>
+                    <button class="star-btn" onclick="toggleStar(event, 'usage-metrics')">
+                        <span class="material-icons-outlined">star</span>
+                    </button>
+                </div>
+                <div class="card" data-section="metrics-reports" data-card-id="repetitive-defects">
+                    <div class="card-icon">
+                        <span class="material-icons-outlined">refresh</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Repetitive Defects</h3>
+                        <p class="card-description">View repetitive fault conditions based on user-defined limits</p>
+                    </div>
+                    <button class="star-btn" onclick="toggleStar(event, 'repetitive-defects')">
+                        <span class="material-icons-outlined">star</span>
+                    </button>
+                </div>
+                <div class="card" data-section="metrics-reports" data-card-id="specific-item-research">
+                    <div class="card-icon">
+                        <span class="material-icons-outlined">content_paste_search</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Specific Item Research</h3>
+                        <p class="card-description">View of Fault Item Details for a specified FDE or MMSG for Boeing airplanes only</p>
+                    </div>
+                    <button class="star-btn" onclick="toggleStar(event, 'specific-item-research')">
+                        <span class="material-icons-outlined">star</span>
+                    </button>
+                </div>
+                <div class="card" data-section="metrics-reports" data-card-id="action-taken-summary">
+                    <div class="card-icon">
+                        <span class="material-icons-outlined">fact_check</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Action-Taken Summary</h3>
+                        <p class="card-description">List of AHM action-taken errors by airplane or fleet</p>
+                    </div>
+                    <button class="star-btn" onclick="toggleStar(event, 'action-taken-summary')">
+                        <span class="material-icons-outlined">star</span>
+                    </button>
+                </div>
+                <div class="card" data-section="metrics-reports" data-card-id="asset-tracking">
+                    <div class="card-icon">
+                        <span class="material-icons-outlined">track_changes</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Asset Tracking</h3>
+                        <p class="card-description">APU and engine tracking by serial number for Boeing airplanes only</p>
+                    </div>
+                    <button class="star-btn" onclick="toggleStar(event, 'asset-tracking')">
+                        <span class="material-icons-outlined">star</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" data-section="performance">
+            <h2 class="section-title">Performance</h2>
+            <div class="cards-grid">
+                <div class="card" data-section="performance" data-card-id="airplane-performance-summary">
+                    <div class="card-icon">
+                        <span class="material-icons-outlined">flight</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Airplane Performance Summary</h3>
+                        <p class="card-description">Monitoring and trending data, including alerts of conditions or servicing needs.</p>
+                    </div>
+                    <button class="star-btn" onclick="toggleStar(event, 'airplane-performance-summary')">
+                        <span class="material-icons-outlined">star</span>
+                    </button>
+                </div>
+                <div class="card" data-section="performance" data-card-id="airplane-performance-tabular">
+                    <div class="card-icon">
+                        <span class="material-icons-outlined">grid_on</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Airplane Performance Tabular Report</h3>
+                        <p class="card-description">Monitoring and trending deviations in tabular form, along with additional details.</p>
+                    </div>
+                    <button class="star-btn" onclick="toggleStar(event, 'airplane-performance-tabular')">
+                        <span class="material-icons-outlined">star</span>
+                    </button>
+                </div>
+                <div class="card" data-section="performance" data-card-id="view-raw-airplane-performance">
+                    <div class="card-icon">
+                        <span class="material-icons-outlined">speed</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">View Raw Airplane Performance Reports</h3>
+                        <p class="card-description">View the contents of Airplane Performance Tabular reports exported in the last 7 days.</p>
+                    </div>
+                    <button class="star-btn" onclick="toggleStar(event, 'view-raw-airplane-performance')">
+                        <span class="material-icons-outlined">star</span>
+                    </button>
+                </div>
+                <div class="card" data-section="performance" data-card-id="fuel-usage-perf">
+                    <div class="card-icon">
+                        <span class="material-icons-outlined">local_gas_station</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Fuel Usage</h3>
+                        <p class="card-description">Tabular summation of actual fuel consumption and emissions.</p>
+                    </div>
+                    <button class="star-btn" onclick="toggleStar(event, 'fuel-usage-perf')">
+                        <span class="material-icons-outlined">star</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" data-section="notification">
+            <h2 class="section-title">Notification</h2>
+            <div class="cards-grid">
+                <div class="card" data-section="notification" data-card-id="email-notification">
+                    <div class="card-icon">
+                        <span class="material-icons-outlined">email</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Email Notification/AHM Notify App</h3>
+                        <p class="card-description">Create one or more rules for email or mobile device notifications</p>
+                    </div>
+                    <button class="star-btn" onclick="toggleStar(event, 'email-notification')">
+                        <span class="material-icons-outlined">star</span>
+                    </button>
+                </div>
+                <div class="card" data-section="notification" data-card-id="acms-page-forwarding">
+                    <div class="card-icon">
+                        <span class="material-icons-outlined">forward_to_inbox</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">ACMS or Maintenance Page Report Forwarding</h3>
+                        <p class="card-description">Request that an ACMS and/or Maintenance Pages be forwarded to others</p>
+                    </div>
+                    <button class="star-btn" onclick="toggleStar(event, 'acms-page-forwarding')">
+                        <span class="material-icons-outlined">star</span>
+                    </button>
+                </div>
+                <div class="card" data-section="notification" data-card-id="fault-item-processing">
+                    <div class="card-icon">
+                        <span class="material-icons-outlined">settings</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Fault Item Processing</h3>
+                        <p class="card-description">Create notifications to alert others of fault item processing events for Boeing airplanes only.</p>
+                    </div>
+                    <button class="star-btn" onclick="toggleStar(event, 'fault-item-processing')">
+                        <span class="material-icons-outlined">star</span>
+                    </button>
+                </div>
+                <div class="card" data-section="notification" data-card-id="monitor-aging-airplanes">
+                    <div class="card-icon">
+                        <span class="material-icons-outlined">schedule</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Monitor "Aging" Airplanes</h3>
+                        <p class="card-description">Create one notification when one or more airplanes stop communicating with AHM for Boeing airplanes only.</p>
+                    </div>
+                    <button class="star-btn" onclick="toggleStar(event, 'monitor-aging-airplanes')">
+                        <span class="material-icons-outlined">star</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" data-section="uplinks">
+            <h2 class="section-title">Uplinks</h2>
+            <div class="cards-grid">
+                <div class="card" data-section="uplinks" data-card-id="event-driven-uplinks">
+                    <div class="card-icon">
+                        <span class="material-icons-outlined">flight_takeoff</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Event Driven Uplinks</h3>
+                        <p class="card-description">Plot showing faults for an airplane or flight</p>
+                    </div>
+                    <button class="star-btn" onclick="toggleStar(event, 'event-driven-uplinks')">
+                        <span class="material-icons-outlined">star</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Star functionality with localStorage
+        const STORAGE_KEY = 'starredCards-v7';
+        let starredCards = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+
+        function toggleStar(event, cardId) {
+            event.stopPropagation();
+            const button = event.currentTarget;
+            const card = button.closest('.card');
+            
+            if (starredCards.includes(cardId)) {
+                starredCards = starredCards.filter(id => id !== cardId);
+                button.classList.remove('starred');
+            } else {
+                starredCards.push(cardId);
+                button.classList.add('starred');
+            }
+            
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(starredCards));
+            renderStarredSection();
+        }
+
+        function renderStarredSection() {
+            const starredSection = document.getElementById('starredSection');
+            
+            if (starredCards.length > 0) {
+                const section = document.createElement('div');
+                section.className = 'section starred-section';
+                section.innerHTML = '<h2 class="section-title">Starred Resources</h2><div class="cards-grid"></div>';
+                const grid = section.querySelector('.cards-grid');
+                
+                starredCards.forEach(cardId => {
+                    const originalCard = document.querySelector(`[data-card-id="${cardId}"]`);
+                    if (originalCard) {
+                        const clonedCard = originalCard.cloneNode(true);
+                        const starBtn = clonedCard.querySelector('.star-btn');
+                        starBtn.classList.add('starred');
+                        starBtn.setAttribute('onclick', `toggleStar(event, '${cardId}')`);
+                        grid.appendChild(clonedCard);
+                    }
+                });
+                
+                starredSection.innerHTML = '';
+                starredSection.appendChild(section);
+            } else {
+                starredSection.innerHTML = '';
+            }
+        }
+
+        // Initialize starred states
+        function initializeStars() {
+            starredCards.forEach(cardId => {
+                const card = document.querySelector(`[data-card-id="${cardId}"]`);
+                if (card) {
+                    const starBtn = card.querySelector('.star-btn');
+                    if (starBtn) {
+                        starBtn.classList.add('starred');
+                    }
+                }
+            });
+            renderStarredSection();
+        }
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const allCards = document.querySelectorAll('.card');
+            
+            allCards.forEach(card => {
+                const title = card.querySelector('.card-title').textContent.toLowerCase();
+                const description = card.querySelector('.card-description').textContent.toLowerCase();
+                const isMatch = title.includes(searchTerm) || description.includes(searchTerm);
+                
+                card.classList.toggle('hidden', !isMatch && searchTerm !== '');
+            });
+        });
+
+        // Initialize
+        initializeStars();
+    </script>
+</body>
+</html>

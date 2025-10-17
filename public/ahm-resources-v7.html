@@ -812,18 +812,29 @@
 
         function toggleStar(event, cardId) {
             event.stopPropagation();
-            const button = event.currentTarget;
-            const card = button.closest('.card');
             
             if (pinnedCards.includes(cardId)) {
+                // Remove from pinned
                 pinnedCards = pinnedCards.filter(id => id !== cardId);
-                button.classList.remove('starred');
             } else {
+                // Add to pinned
                 pinnedCards.push(cardId);
-                button.classList.add('starred');
             }
             
+            // Update localStorage
             localStorage.setItem(STORAGE_KEY, JSON.stringify(pinnedCards));
+            
+            // Update all star buttons for this card (both in original section and pinned section)
+            const allStarButtons = document.querySelectorAll(`[data-card-id="${cardId}"] .star-btn`);
+            allStarButtons.forEach(btn => {
+                if (pinnedCards.includes(cardId)) {
+                    btn.classList.add('starred');
+                } else {
+                    btn.classList.remove('starred');
+                }
+            });
+            
+            // Re-render pinned section
             renderPinnedSection();
         }
 

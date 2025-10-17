@@ -315,6 +315,36 @@
             display: none;
         }
 
+        .section.hidden {
+            display: none;
+        }
+
+        .clear-search {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #9ca3af;
+            padding: 0.25rem;
+            display: none;
+            transition: color 0.2s ease;
+        }
+
+        .clear-search.show {
+            display: block;
+        }
+
+        .clear-search:hover {
+            color: #4b5563;
+        }
+
+        .clear-search .material-icons-outlined {
+            font-size: 20px;
+        }
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -356,6 +386,9 @@
             <div class="search-box">
                 <span class="material-icons-outlined">search</span>
                 <input type="text" id="searchInput" placeholder="Quick Search">
+                <button class="clear-search" id="clearSearch">
+                    <span class="material-icons-outlined">close</span>
+                </button>
             </div>
         </div>
 
@@ -793,24 +826,44 @@
 
         // Search functionality
         const searchInput = document.getElementById('searchInput');
-        searchInput.addEventListener('input', (e) => {
-            const searchTerm = e.target.value.toLowerCase();
+        const clearSearchBtn = document.getElementById('clearSearch');
+
+        function performSearch() {
+            const searchTerm = searchInput.value.toLowerCase();
             const allCards = document.querySelectorAll('.card');
-            const allSections = document.querySelectorAll('.section');
+            const allSections = document.querySelectorAll('.section:not(.pinned-section)');
+            
+            // Show/hide clear button
+            clearSearchBtn.classList.toggle('show', searchTerm !== '');
+            
+            if (searchTerm === '') {
+                // Show everything when search is empty
+                allCards.forEach(card => card.classList.remove('hidden'));
+                allSections.forEach(section => section.classList.remove('hidden'));
+                return;
+            }
             
             allCards.forEach(card => {
                 const title = card.querySelector('.card-title').textContent.toLowerCase();
                 const description = card.querySelector('.card-description').textContent.toLowerCase();
                 const isMatch = title.includes(searchTerm) || description.includes(searchTerm);
                 
-                card.classList.toggle('hidden', !isMatch && searchTerm !== '');
+                card.classList.toggle('hidden', !isMatch);
             });
             
             // Hide sections with no visible cards
             allSections.forEach(section => {
                 const visibleCards = section.querySelectorAll('.card:not(.hidden)');
-                section.classList.toggle('hidden', visibleCards.length === 0 && searchTerm !== '');
+                section.classList.toggle('hidden', visibleCards.length === 0);
             });
+        }
+
+        searchInput.addEventListener('input', performSearch);
+
+        clearSearchBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            performSearch();
+            searchInput.focus();
         });
 
         // Initialize

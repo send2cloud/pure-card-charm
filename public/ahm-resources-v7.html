@@ -359,37 +359,7 @@
             </div>
         </div>
 
-        <div id="starredSection"></div>
-
-        <div class="section" data-section="pinned">
-            <h2 class="section-title">Pinned</h2>
-            <div class="cards-grid">
-                <div class="card" data-section="pinned" data-card-id="event-driven-uplinks-pinned">
-                    <div class="card-icon">
-                        <span class="material-icons-outlined">flight_takeoff</span>
-                    </div>
-                    <div class="card-content">
-                        <h3 class="card-title">Event Driven Uplinks</h3>
-                        <p class="card-description">Plot showing faults for an airplane or flight</p>
-                    </div>
-                    <button class="star-btn" onclick="toggleStar(event, 'event-driven-uplinks-pinned')">
-                        <span class="material-icons-outlined">star</span>
-                    </button>
-                </div>
-                <div class="card" data-section="pinned" data-card-id="fuel-usage-pinned">
-                    <div class="card-icon">
-                        <span class="material-icons-outlined">local_gas_station</span>
-                    </div>
-                    <div class="card-content">
-                        <h3 class="card-title">Fuel Usage</h3>
-                        <p class="card-description">Tabular summation of actual fuel consumption and emissions.</p>
-                    </div>
-                    <button class="star-btn" onclick="toggleStar(event, 'fuel-usage-pinned')">
-                        <span class="material-icons-outlined">star</span>
-                    </button>
-                </div>
-            </div>
-        </div>
+        <div id="pinnedSection"></div>
 
         <div class="section" data-section="aircraft-data">
             <h2 class="section-title">Aircraft Data</h2>
@@ -781,7 +751,7 @@
         }
 
         function renderPinnedSection() {
-            const pinnedSection = document.getElementById('starredSection');
+            const pinnedSection = document.getElementById('pinnedSection');
             
             if (pinnedCards.length > 0) {
                 const section = document.createElement('div');

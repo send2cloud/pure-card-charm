@@ -100,15 +100,15 @@
         }
 
         .card {
-            background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            border: 1.5px solid #e5e7eb;
+            background: #FFF;
+            border-radius: 4px;
+            padding: 14px 12px;
+            border: 1px solid rgba(0, 0, 0, 0.30);
             transition: all 0.3s ease;
             cursor: pointer;
             position: relative;
             display: flex;
-            gap: 1rem;
+            gap: 12px;
             animation: fadeIn 0.6s ease-out;
         }
 
@@ -183,20 +183,10 @@
             font-variation-settings: 'FILL' 1;
         }
 
-        /* Pinned section - Red/Pink and Yellow */
-        [data-section="pinned"] .card:nth-child(1) {
-            background: #fef5f5;
-            border-color: #f87171;
-        }
-
+        /* Icon backgrounds for different sections */
         [data-section="pinned"] .card:nth-child(1) .card-icon {
             background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
             color: white;
-        }
-
-        [data-section="pinned"] .card:nth-child(2) {
-            background: #fffdf7;
-            border-color: #fbbf24;
         }
 
         [data-section="pinned"] .card:nth-child(2) .card-icon {
@@ -204,21 +194,9 @@
             color: white;
         }
 
-        /* Aircraft Data - Light Blue */
-        [data-section="aircraft-data"] .card {
-            background: #f0f9ff;
-            border-color: #38bdf8;
-        }
-
         [data-section="aircraft-data"] .card-icon {
             background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
             color: white;
-        }
-
-        /* Tools - Light Pink */
-        [data-section="tools"] .card {
-            background: #fdf4f8;
-            border-color: #f472b6;
         }
 
         [data-section="tools"] .card-icon {
@@ -226,21 +204,9 @@
             color: white;
         }
 
-        /* Fault Research - Light Green */
-        [data-section="fault-research"] .card {
-            background: #f0fdf8;
-            border-color: #4ade80;
-        }
-
         [data-section="fault-research"] .card-icon {
             background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
             color: white;
-        }
-
-        /* Metrics & Reports - Light Orange */
-        [data-section="metrics-reports"] .card {
-            background: #fff8f0;
-            border-color: #fb923c;
         }
 
         [data-section="metrics-reports"] .card-icon {
